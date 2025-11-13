@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <a href="read.html">Back to Read</a>
+    <h1>Delete</h1>
+    Batch: <select class="form-select" aria-label="Select Batch"></select><br>
+    <button type="button" class="btn btn-danger" onclick="deleteBatch()">Delete Batch</button>
+    <script>
+        let database = JSON.parse(localStorage.getItem("2027_EMR"))
+        let dropdown = $(".form-select")
+        function updateDropdown() {
+            dropdown.empty()
+            dropdown.append("<option selected>Select Batch</option>")
+            for (let i = 0; i < database.batches.length; i++) {
+                dropdown.append(`<option value="${i}">${database.batches[i].name}</option>`)
+            }
+        }
+        function deleteBatch() {
+            if (dropdown.val() == "Select Batch") {
+                return undefined
+            }
+            database.batches.splice(dropdown.val(), 1)
+            updateDropdown()
+            localStorage.setItem("2027_EMR", JSON.stringify(database))
+        }
+        updateDropdown()
+    </script>
+</body>
+</html>
