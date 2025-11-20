@@ -14,8 +14,6 @@
     <a href="index.html">Back to Home</a>
     <h1>Read</h1>
     <button type="button" class="btn btn-primary" onclick="view()">View Batch information</button>
-    <a href="update.html">Update Batch</a>
-    <a href="delete.html">Delete Batch</a>
     <table class="table">
     <thead>
         <tr>
@@ -37,7 +35,7 @@
             databaseTable = $("#databaseTable")
             for (let i = 0; i < database.batches.length; i++) {
                 let batch = database.batches[i]
-                databaseTable.append(`<tr><th scope="row">${batch.name}</th><td>${batch["start"]}</td><td>${batch["expiryA"]}</td><td>${batch["added"]}</td><td>${batch["expiryB"]}</td><td>${batch["consumed"]}</td><td>${batch["end"]}</td></tr>`)
+                databaseTable.append(`<tr><th scope="row"><a href="update_delete.html?id=${i}" class="btn btn-light" role="button">${batch.name}</a></th><td>${batch.start}</td><td>${batch.expiryA}</td><td>${batch.added}</td><td>${batch.expiryB}</td><td>${batch.consumed}</td><td>${batch.end}</td></tr>`)
             }
         }
     </script>
