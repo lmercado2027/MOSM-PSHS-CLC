@@ -55,8 +55,8 @@
             batch.expiryB = $("#dateBInput")[0].value
             batch.consumed = Number($("#quantityCInput")[0].value)
             batch.end = batch.start + batch.added - batch.consumed
-            updateDropdown()
             localStorage.setItem("2027_EMR", JSON.stringify(database))
+            updateDetails()
         }
         function deleteBatch() {
             if (id == -1) {
