@@ -1,24 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Read</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Main Page</h1>
-    <a href="create.html">Create</a>
-    <a href="read.html">Read</a>
-    <a href="list.html">List</a>
+    <div class="container-fluid" style="padding-top: 15px;">
+        <div class="row">
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary left-align-button" onclick="goToLink('create')">Create</button>
+                <br>
+                <br>
+                <button type="button" class="btn btn-primary left-align-button" onclick="goToLink('index')" style="width:90%;max-width: 128px;">Inventory</button>
+
+                <br>
+                <br>
+            </div>
+
+            <div class="col-md-10 rounded-background">
+                    <h1 id="mainheadingtext" style="display:inline;">Inventory</h1>&nbsp;&nbsp;<h4 id="numberOfInventory" style="display:inline;">()</h4>
+                    <div id="nothinghere"><br><br><h4>There's nothing here</h4><br></div>
+                <table id="theHeadersOfTheTable" class="table">
+                    <thead>
+                        <th scope="col">Name</th>
+                        <th scope="col">Inventory</th>
+                        <th scope="col">Expiration Date</th>
+                    </thead>
+                    <tbody id="databaseTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
     <script>
+
+        function goToLink(input){
+            window.location.replace(input+".html");
+        }
+
         function debugReset() {
             localStorage.setItem("2027_EMR", JSON.stringify({"batches":[]}))
         }
+
+        function autoRun(){
+            let rwa = localStorage.getItem("2027_EMR")
+
+            if (!rwa){
+                try {
+                    console.log("Data doesn't exist lmao, trying to create it...")
+                    debugReset()
+                    console.log("Data now created...")
+                    return;
+                } catch (error) {
+                    console.log("But something went wrong...")
+                }
+            }
+
+            try {
+                console.log("Checking if Data is looking good...")
+                JSON.parse(rwa)
+                console.log("Awesome...")
+                return;
+
+            } catch (error) {
+                if (error instanceof SyntaxError) {
+                    console.error("Data got corrupted aw man... ", error.message);
+                } else {
+                    console.error("Something really unexpected happened: ", error);
+                }
+
+                debugReset()
+            }
+        }
+
+        autoRun()
+
+        let database = JSON.parse(localStorage.getItem("2027_EMR"))
+        function view() {
+            $("#databaseTable").empty()
+            databaseTable = $("#databaseTable")
+
+            if (database.batches.length > 0){
+                try{document.getElementById("nothinghere").remove();}catch (error){}
+                for (let i = 0; i < database.batches.length; i++) {
+                    let batch = database.batches[i]
+                    databaseTable.append(`<tr><th scope="row"><a href="update_delete.html?id=${i}" class="btn btn-light" role="button">${batch.name}</a></th><td>${batch.start+batch.added-batch.consumed}</td><td>${batch.expiryA}</td></tr>`)
+                }
+
+                document.getElementById("numberOfInventory").textContent = "("+database.batches.length+")";
+
+            }else{
+                try{$(theHeadersOfTheTable).remove()
+                document.getElementById("numberOfInventory").remove();}catch (error){}
+            }
+        }
+        view()
+        setInterval(view, 2763)
     </script>
 </body>
 </html>
