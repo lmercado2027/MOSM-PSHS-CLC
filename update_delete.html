@@ -13,21 +13,28 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    
+    <nav class="navbar navbar-expand-md bg-light navbar-light">
+        <a class="navbar-brand" href="index.html"><img src="img/logo.png" width=100px height=auto></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="create.html">Create</a>
+            </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
 
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary left-align-button" onclick="goToLink('create')">Create</button>
-                <br>
-                <br>
-                <button type="button" class="btn btn-primary left-align-button" onclick="goToLink('index')" style="width:90%;max-width: 128px;">Inventory</button>
-
-                <br>
-                <br>
-            </div>
-
-            <div class="col-md-8 rounded-background">
+            <div class="col-md-12 rounded-background">
                 <form onsubmit="return updateBatch()" method="post">
                     <nav class="navbar navbar-expand-md navbar-light">
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">

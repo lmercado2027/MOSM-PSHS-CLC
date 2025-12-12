@@ -13,27 +13,35 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-md bg-light navbar-light">
+        <a class="navbar-brand" href="index.html"><img src="img/logo.png" width=100px height=auto></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="create.html">Create</a>
+            </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
 
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary left-align-button" onclick="goToLink('create')">Create</button>
-                <br>
-                <br>
-                <button type="button" class="btn btn-primary left-align-button" onclick="goToLink('index')" style="width:90%;max-width: 128px;">Inventory</button>
-
-                <br>
-                <br>
-            </div>
-
-            <div class="col-md-10 rounded-background">
+            <div class="col-md-12 rounded-background">
                     <h1 id="mainheadingtext" style="display:inline;">Inventory</h1>&nbsp;&nbsp;<h4 id="numberOfInventory" style="display:inline;">()</h4>
                     <div id="nothinghere"><br><br><h4>There's nothing here</h4><br></div>
                 <table id="theHeadersOfTheTable" class="table">
                     <thead>
                         <th scope="col">Name</th>
                         <th scope="col">Inventory</th>
-                        <th scope="col">Expiration Date</th>
+                        <th scope="col" onclick="sort()">Expiration Date</th>
                     </thead>
                     <tbody id="databaseTable"></tbody>
                 </table>
@@ -82,9 +90,34 @@
             }
         }
 
+        function autoRun_sort(){
+            let sortPref = localStorage.getItem("2027_EMR_sortpref")
+            let error = false
+            if (sortPref != null){
+                switch(sortPref){
+                    case "date":
+                        sort()
+                    break
+                    default:
+                        error = true
+                }
+            }else{
+                error = true
+            }
+
+            if (error == true){
+                console.log("no exist")
+                localStorage.setItem("2027_EMR_sortpref", "date")
+                sort()
+            }
+        }
+
         autoRun()
 
         let database = JSON.parse(localStorage.getItem("2027_EMR"))
+
+        autoRun_sort()
+
         function view() {
             $("#databaseTable").empty()
             databaseTable = $("#databaseTable")
@@ -104,6 +137,40 @@
             }
         }
         view()
+
+        //DATE SORT/DEFAULT SORT
+        //CURRENTLY IN INSERTION SORT, PLS FIX
+        function sort(){
+            console.log(database)
+
+            for (let i = 1; i<database.batches.length;i+=1){
+                for(let j=i;j!=0;j-=1){
+                    const date_a = new Date(database.batches[j-1].expiryA)
+                    const date_b = new Date(database.batches[j].expiryA)
+
+                    if(date_a > date_b){
+                        [database.batches[j-1], database.batches[j]] = [database.batches[j],database.batches[j-1]]
+                    }else{
+                        break
+                    }
+                }
+            }
+                
+            localStorage.setItem("2027_EMR", JSON.stringify(database))
+            return database
+        }
+
+        function unsort(iters){
+            for (let _ = 0; _<iters;_++){
+                for (let i = 1; i<database.batches.length;i+=1){
+                    if (Math.random() - 0.5>=0){
+                        [database.batches[i-1], database.batches[i]] = [database.batches[i],database.batches[i-1]]
+                        console.log("swap")
+                    }
+                }
+            }
+            localStorage.setItem("2027_EMR", JSON.stringify(database))
+        }
         setInterval(view, 2763)
     </script>
 </body>
