@@ -27,6 +27,7 @@ body {
     border: none !important;
     box-shadow: none !important;
     color: inherit;
+    padding: .375em 0em;
 }
 .btn-link-plain:hover,
 .btn-link-plain:focus {
