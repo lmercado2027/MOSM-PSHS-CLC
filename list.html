@@ -9,7 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@5.0.2/dist/jspdf.plugin.autotable.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -38,9 +39,17 @@
             window.location.replace(input+".html");
         }
 
+        let database = JSON.parse(localStorage.getItem("2027_EMR"))
         function exportToPDF() {
-            alert("Not yet implemented.")
-        }
+            const { jsPDF } = window.jspdf
+            const doc = new jsPDF()
+            autoTable(doc, {
+                head: [['Name', 'Inventory', 'Expiration Date']],
+                body: database.batches.map((batch) => {return [batch.name, batch.start+batch.added-batch.consumed, batch.expiryA]})
+            })
+            let dateNow = new Date().toJSON().slice(0, 10)
+            doc.save(`Inventory Report (${dateNow}).pdf`)
+        }            
 
     </script>
 </body>
