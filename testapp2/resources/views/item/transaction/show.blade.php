@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="d-flex justify-content-between">
+                <div class="container-md d-flex justify-content-between">
                     <div>
                         <h4>Quantity Taken: {{ $transaction->qty }}</h4>
                         <br>

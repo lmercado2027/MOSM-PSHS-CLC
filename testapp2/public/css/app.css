@@ -1,0 +1,19 @@
+h1, h2, h4, a, th, td {
+    font-family: "Lato", sans-serif;
+}
+
+.nav-btn {
+    background-color: #f3f7fa;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.item-btn {
+    background-color: white;
+    width: 100%;
+    text-align: left;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.nav-btn:hover, .item-btn:hover {
+    background-color: #d6e0e8;
+}

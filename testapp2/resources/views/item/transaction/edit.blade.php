@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <hr>
-                <form action="{{ route('item.transaction.update', [$item->id, $transaction->id]) }}" method="post">
+                <form class="container-md" action="{{ route('item.transaction.update', [$item->id, $transaction->id]) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="d-flex justify-content-between">

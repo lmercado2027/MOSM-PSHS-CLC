@@ -84,7 +84,7 @@
                     <br>
                     <h4>No Transactions Found</h4>
                     <br>
-                    <h4><a href="{{ route('item.transaction.create', $item->id) }}">Create Transaction?</a></h4>
+                    <a class="btn item-btn" href="{{ route('item.transaction.create', $item->id) }}" style="width: auto">Create Transaction</a>
                 @endif
                 @if ($transactions->isNotEmpty())
                     <br>

@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <hr>
-                <form action="{{ route('item.transaction.store', $item->id) }}" method="post">
+                <form class="container-md" action="{{ route('item.transaction.store', $item->id) }}" method="post">
                     @csrf
                     <div class="d-flex justify-content-between">
                         <div class="form-group">

@@ -42,22 +42,7 @@
         }
     </style>
 
-    <nav class="navbar navbar-expand-md navbar-light" style="justify-content:flex-start; background-color:#f3f7fa">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" style="margin-right:1rem">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="{{ route('item.index') }}"><img src="{{ asset('storage/logo.png') }}" width=200px height=auto></a>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link btn nav-btn" href="{{ route('item.index') }}">Inventory</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link btn nav-btn" href="{{ route('item.create') }}">Create Item</a>
-            </li>
-            </ul>
-        </div>
-    </nav>
+    <x-navbar></x-navbar>
 
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
@@ -82,7 +67,7 @@
                     </div>
                 </div>
                 <hr>
-                <form action="{{ route('item.store') }}" method="post">
+                <form class="container-md" action="{{ route('item.store') }}" method="post">
                     @csrf
                     <div class="d-flex justify-content-between">
                         <div class="form-group">

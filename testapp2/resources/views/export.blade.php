@@ -1,3 +1,11 @@
-<div>
-    <!-- The biggest battle is the war against ignorance. - Mustafa Kemal Atatürk -->
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<x-head>
+    <x-slot:title>
+        Clinic: Export
+    </x-slot>
+</x-head>
+<body>
+    <x-navbar/>
+    
+</body>

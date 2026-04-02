@@ -13,12 +13,14 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->sort == 'name' || $request->sort == 'expiry_date') {
-            $items = Item::all()->sortBy($request->sort);
-        } else {
-            $items = Item::all();
+        $items = Item::all();
+        foreach ($items as $item) {
+            $item['expiry_date'] = $item->batches->sortBy('expiry_date')->first()->expiry_date ?? "N/A";
         }
-        return view('item.index', compact('items'));
+        if ($request->sort == 'name' || $request->sort == 'expiry_date') {
+            $items = $items->sortBy($request->sort);
+        }
+        return view('item.index', compact('items', 'request'));
     }
 
     /**
