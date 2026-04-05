@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<x-head>
-    <x-slot:title>
-        Clinic: Inventory
-    </x-slot>
-</x-head>
+<x-head/>
 <body>
     <x-navbar/>
 
@@ -16,8 +12,12 @@
                         <h1 style="display:inline;">Inventory</h1>
                         <h4 style="display:inline;">({{ $items->count() }})</h4>
                     </div>
-                    <div class="d-none d-md-inline">
-                        <a type="button" class="btn item-btn d-flex justify-content-between align-items-center" href="{{ route('export') }}" style="width:11em">
+                    <div class="d-flex justify-content-start">
+                        <a class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.create') }}">
+                            <i class="bi-plus-lg" style="font-size:3em;line-height:1em"></i>
+                            <h4 style="margin:0">CREATE<br>ITEM</h4>
+                        </a>
+                        <a type="button" class="btn item-btn action-btn d-none d-md-flex justify-content-between align-items-center" href="{{ route('export') }}">
                             <h2 style="margin:0">Export</h4>
                             <i class="bi-box-arrow-up-right" style="font-size:2em;line-height:1em"></i>
                         </a>
@@ -28,11 +28,10 @@
                     <br>
                     <h4>No Items Found</h4>
                     <br>
-                    <a class="btn item-btn" href="{{ route('item.create') }}" style="width: auto">Create Item</a>
                 @endif
                 @if ($items->isNotEmpty())
                     <br>
-                    <table id="theHeadersOfTheTable" class="table">
+                    <table class="table">
                         <thead>
                             <th scope="col">
                                 <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'name']) }}">

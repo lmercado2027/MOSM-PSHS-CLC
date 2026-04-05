@@ -17,3 +17,15 @@ h1, h2, h4, a, th, td {
 .nav-btn:hover, .item-btn:hover {
     background-color: #d6e0e8;
 }
+
+.action-btn {
+    width: 11em;
+}
+
+.delete-btn {
+    width: 11em;
+}
+
+.delete-btn:hover {
+    background-color: #ffcccb;
+}
