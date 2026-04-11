@@ -27,7 +27,6 @@
                     <hr>
                     <br>
                     <h4>No Items Found</h4>
-                    <br>
                 @endif
                 @if ($items->isNotEmpty())
                     <br>
@@ -38,7 +37,16 @@
                                     <b>Name</b>
                                 </a>
                             </th>
-                            <th scope="col" style="vertical-align:middle">Quantity</th>
+                            <th scope="col">
+                                <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'qty']) }}">
+                                    <b>Quantity</b>
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'status']) }}">
+                                    <b>Status</b>
+                                </a>
+                            </th>
                             <th scope="col">
                                 <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'expiry_date']) }}">
                                     <b>Earliest Expiration Date</b>
@@ -51,11 +59,20 @@
                                     <th scope="row">
                                         <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ $item->name }}</a>
                                     </th>
-                                    <td style='padding:1.125rem .75rem'>
-                                        {{ $item->batches->sum('qty') - $item->transactions->sum('qty') }}
+                                    <td>
+                                        <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button" style="background-color: {{ ['white', 'gold', 'orange', 'red'][$item->qty_warning] }};">
+                                            @if ($item->qty_warning > 0)
+                                                <b style="color: white;">{{ $item->qty }}</b>
+                                            @else
+                                                {{ $item->qty }}
+                                            @endif
+                                        </a>
                                     </td>
-                                    <td style='padding:1.125rem 1.5rem'>
-                                        {{ $item->expiry_date }}
+                                    <td>
+                                        <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ ['Available', 'Out of Stock', 'EXPIRED'][$item->status] }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ $item->expiry_date }}</a>
                                     </td>
                                 </tr>
                             @endforeach

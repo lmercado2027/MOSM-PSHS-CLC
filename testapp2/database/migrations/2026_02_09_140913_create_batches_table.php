@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->date('expiry_date')->nullable();
-            $table->integer('qty');
+            $table->integer('init_qty');
+            $table->integer('curr_qty');
             $table->timestamps();
         });
     }

@@ -31,7 +31,7 @@
                         <br>
                     </div>
                     
-                    <div class="d-none d-md-flex flex-column align-items-end">
+                    {{-- <div class="d-none d-md-flex flex-column align-items-end">
                         <a type="button" class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.batch.edit', [$item->id, $batch->id]) }}">
                             <i class="bi-pencil-square" style="font-size:3em;line-height:1em"></i>
                             <h4 style="margin:0">EDIT<br>BATCH</h4>
@@ -45,10 +45,10 @@
                                 <h4 style="margin:0">DELETE<br>BATCH</h4>
                             </button>
                         </form>
-                    </div>
+                    </div> --}}
                 </div>
 
-                <div class="container-md d-flex justify-content-between d-md-none">
+                {{-- <div class="container-md d-flex justify-content-between d-md-none">
                     <a type="button" class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.batch.edit', [$item->id, $batch->id]) }}">
                         <i class="bi-pencil-square" style="font-size:3em;line-height:1em"></i>
                         <h4 style="margin:0">EDIT<br>BATCH</h4>
@@ -62,7 +62,7 @@
                             <h4 style="margin:0">DELETE<br>BATCH</h4>
                         </button>
                     </form>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -14,10 +14,30 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $items = Item::all();
+        $date_now = getdate();
         foreach ($items as $item) {
-            $item['expiry_date'] = $item->batches->sortBy('expiry_date')->first()->expiry_date ?? "N/A";
+            $item->qty = $item->batches->sum('qty') - $item->transactions->sum('qty');
+            $item->expiry_date = $item->batches->sortBy('expiry_date')->first()->expiry_date ?? "N/A";
+
+            $item->qty_warning = 0;
+            if ($item->low_warning_threshold && $item->qty < $item->low_warning_threshold) {
+                $item->qty_warning = 1;
+            } if ($item->mid_warning_threshold && $item->qty < $item->mid_warning_threshold) {
+                $item->qty_warning = 2;
+            } if ($item->high_warning_threshold && $item->qty < $item->high_warning_threshold) {
+                $item->qty_warning = 3;
+            }
+
+            $item->status = 0;
+            if ($date_now <= $item->expiry_date) {
+                $item->status = 2;
+            } if ($item->qty == 0) {
+                $item->status = 1;
+            }
         }
-        if ($request->sort == 'name' || $request->sort == 'expiry_date') {
+
+        $items = $items->sortBy('name');
+        if (in_array($request->sort, ['qty', 'status', 'expiry_date'])) {
             $items = $items->sortBy($request->sort);
         }
         return view('item.index', compact('items', 'request'));
@@ -38,10 +58,24 @@ class ItemController extends Controller
     {
         $request->validate([
             'name' => 'required|string|unique:items|max:255',
-            // TODO: add other fields and automatically create first batch
+            'category' => 'required|string',
+            'dose' => 'nullable|string',
+            'unit' => 'nullable|string',
+            'size' => 'nullable|string',
+            'grouping'  => 'nullable|string',
+            'high_warning_threshold' => 'nullable|int|gt:0',
+            'mid_warning_threshold' => 'nullable|int|gt:0',
+            'low_warning_threshold' => 'nullable|int|gt:0',
         ]);
 
-        Item::create($request->all());
+        //dd($request->category);
+        $newItem = new Item();
+        $newItem->name = $request->name;
+        $newItem->category = $request->category;
+        $newItem->high_warning_threshold = $request->high_warning_threshold;
+        $newItem->mid_warning_threshold = $request->mid_warning_threshold;
+        $newItem->low_warning_threshold = $request->low_warning_threshold;
+        $newItem->save();
         return redirect()->route('item.index')->with('success', 'Item created successfully.');
     }
 

@@ -31,10 +31,15 @@ class TransactionController extends Controller
     public function store(Request $request, Item $item)
     {
         $request->validate([
-            'qty' => 'required|int|lte:' . $item->batches->sum('qty') - $item->transactions->sum('qty'),
+            'qty' => 'required|int|lte:' . $item->batches->sum('init_qty') - $item->transactions->sum('qty'),
+            'type' => 'required|string',
         ]);
 
-        Transaction::create(array_merge(["item_id" => $item->id], $request->all()));
+        $newTransaction = new Transaction();
+        $newTransaction->item_id = $item->id;
+        $newTransaction->qty = $request->qty;
+        $newTransaction->type = $request->type;
+        $newTransaction->save();
         return redirect()->route('item.transaction.index', $item->id)->with('success', 'Transaction created successfully.');
     }
 

@@ -25,6 +25,7 @@
                     <div>
                         <h4>Quantity: {{ $item->batches->sum('qty') - $item->transactions->sum('qty') }}</h4>
                         <h4>Earliest Expiry Date: {{ $item->batches->sortBy('expiry_date')->first()->expiry_date ?? "N/A" }}</h4>
+                        <h4>Type: {{ $item->category ?? "N/A" }}</h4>
                         <br>
                         <a type="button" class="btn item-btn d-flex justify-content-between align-items-center" href="{{ route('item.batch.index', $item->id) }}" style="width: 10em">
                             <h4 style="margin:0">View<br>Batches</h4>

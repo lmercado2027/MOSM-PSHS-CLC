@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('category');
+            $table->string('dose')->nullable();
+            $table->string('unit')->nullable();
+            $table->string('size')->nullable();
+            $table->string('grouping')->nullable();
+            $table->integer('high_warning_threshold')->nullable();
+            $table->integer('mid_warning_threshold')->nullable();
+            $table->integer('low_warning_threshold')->nullable();
             $table->timestamps();
         });
     }

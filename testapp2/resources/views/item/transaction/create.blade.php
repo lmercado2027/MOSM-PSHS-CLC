@@ -30,6 +30,12 @@
                         <div class="form-group">
                             <label for="qty">Quantity Taken:</label>
                             <input class="form-control" type="number" min="1" step="1" id="qty" name="qty" required>
+                            <label for="type">Type:</label>
+                            <select id="type" name="type" class="form-control" required>
+                                <option value="">Select...</option>
+                                <option value="Consumed">Consumed</option>
+                                <option value="Expired">Expired</option>
+                            </select>
                             <br>
                             @if ($errors->any())
                                 <div class="alert alert-danger">

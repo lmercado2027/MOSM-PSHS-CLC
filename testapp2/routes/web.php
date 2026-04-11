@@ -10,18 +10,22 @@ Route::resource('item', ItemController::class);
 Route::resource('item.batch', BatchController::class);
 Route::resource('item.transaction', TransactionController::class);
 
-Route::get('/', function () {
-    return redirect('/item');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return redirect('/item');
+    });
+
+    Route::get('/export', function() {
+        return view('export');
+    }) -> name('export');
+
+    Route::get('/settings', function() {
+        return view('settings');
+    }) -> name('settings');
+
+    Route::get('/home', function () {
+        return redirect('/item');
+    })->name('home');
 });
 
-Route::get('/export', function() {
-    return view('export');
-}) -> name('export');
-
-Route::get('/settings', function() {
-    return view('settings');
-}) -> name('settings');
-
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

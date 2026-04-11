@@ -24,7 +24,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="form-group">
                             <label for="qty">Quantity:</label>
-                            <input class="form-control" type="number" min="1" step="1" id="qty" name="qty" required><br>
+                            <input class="form-control" type="number" min="1" step="1" id="init_qty" name="init_qty" required><br>
                             <label for="expiry_date">Expiration Date:</label>
                             <input class="form-control" type="date" id="expiry_date" name="expiry_date">
                             <br>
