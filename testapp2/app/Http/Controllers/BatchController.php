@@ -32,13 +32,12 @@ class BatchController extends Controller
     {
         $request->validate([
             'expiry_date' => 'nullable|date|after:today',
-            'init_qty' => 'required|int|gt:0',
         ]);
         
         $newBatch = new Batch();
         $newBatch->item_id = $item->id;
-        $newBatch->init_qty = $request->init_qty;
-        $newBatch->curr_qty = $request->init_qty;
+        $newBatch->curr_qty = $request->curr_qty;
+        $newBatch->expiry_date = $request->expiry_date;
         $newBatch->save();
         return redirect()->route('item.batch.index', $item->id)->with('success', 'Batch created successfully.');
     }
@@ -66,7 +65,7 @@ class BatchController extends Controller
     {
         $request->validate([
             'expiry_date' => 'nullable|date',
-            'qty' => 'required|int|gte:0',
+            'curr_qty' => 'required|int|gte:0',
         ]);
 
         $batch->update(array_merge(["item_id" => $item->id], $request->all()));

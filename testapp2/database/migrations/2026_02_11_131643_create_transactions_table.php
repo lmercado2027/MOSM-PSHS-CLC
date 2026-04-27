@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
-            $table->date('expiry_date')->nullable();
-            $table->integer('qty');
             $table->string('type');
+            $table->integer('qty');
+            $table->date('expiry_date')->nullable();
+            $table->string('nurse');
             $table->timestamps();
         });
     }

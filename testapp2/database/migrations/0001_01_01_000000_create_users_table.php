@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +36,13 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        DB::table('users')->insert([ # replace with the real head nurse
+            'name' => 'Sum Wan',
+            'email' => 'sum1datayustuno@gmail.com',
+            'password' => Hash::make('nakakapagpabagabag'),
+            'admin' => true,
+        ]);
     }
 
     /**

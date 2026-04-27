@@ -28,57 +28,75 @@
                     <br>
                     <h4>No Items Found</h4>
                 @endif
-                @if ($items->isNotEmpty())
-                    <br>
-                    <table class="table">
-                        <thead>
-                            <th scope="col">
-                                <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'name']) }}">
-                                    <b>Name</b>
-                                </a>
-                            </th>
-                            <th scope="col">
-                                <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'qty']) }}">
-                                    <b>Quantity</b>
-                                </a>
-                            </th>
-                            <th scope="col">
-                                <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'status']) }}">
-                                    <b>Status</b>
-                                </a>
-                            </th>
-                            <th scope="col">
-                                <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'expiry_date']) }}">
-                                    <b>Earliest Expiration Date</b>
-                                </a>
-                            </th>
-                        </thead>
-                        <tbody id="databaseTable">
-                            @foreach ($items as $item)
-                                <tr>
-                                    <th scope="row">
-                                        <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ $item->name }}</a>
-                                    </th>
-                                    <td>
-                                        <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button" style="background-color: {{ ['white', 'gold', 'orange', 'red'][$item->qty_warning] }};">
-                                            @if ($item->qty_warning > 0)
-                                                <b style="color: white;">{{ $item->qty }}</b>
-                                            @else
-                                                {{ $item->qty }}
-                                            @endif
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ ['Available', 'Out of Stock', 'EXPIRED'][$item->status] }}</a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ $item->expiry_date }}</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
+                @foreach (['drug', 'topical_oral', 'supplies'] as $category)
+                    @if ($items->where('category', $category)->isNotEmpty())
+                        <hr>
+                        <br>
+                        <h4>
+                            @if ($category == "drug")
+                                Drugs
+                            @elseif ($category == "topical_oral")
+                                Topical/Oral
+                            @else
+                                Supplies
+                            @endif
+                        </h4>
+                        <table class="table">
+                            <thead>
+                                <th scope="col">
+                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'name']) }}">
+                                        <b>Name</b>
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'qty']) }}">
+                                        <b>Quantity</b>
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'status']) }}">
+                                        <b>Status</b>
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'expiry_date']) }}">
+                                        <b>Earliest Expiration Date</b>
+                                    </a>
+                                </th>
+                            </thead>
+                            <tbody id="databaseTable">
+                                @foreach ($items->where('category', $category) as $item)
+                                    <tr>
+                                        <th scope="row">
+                                            <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ $item->full_name }}</a>
+                                        </th>
+                                        <td>
+                                            <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button" style="background-color: {{ ['white', 'gold', 'orange', 'red'][$item->qty_warning] }};">
+                                                @if ($item->qty_warning > 0)
+                                                    <b style="color: white;">{{ $item->qty }}</b>
+                                                @else
+                                                    {{ $item->qty }}
+                                                @endif
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button">{{ ['Available', 'Out of Stock', 'EXPIRED'][$item->status] }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('item.show', $item->id) }}" class="btn item-btn" role="button" style="background-color: {{ ['white', 'gold', 'orange', 'red'][$item->time_warning] }};">
+                                                @if ($item->time_warning > 0)
+                                                    <b style="color: white;">{{ $item->expiry_date }}</b>
+                                                @else
+                                                    {{ $item->expiry_date }}
+                                                @endif
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>

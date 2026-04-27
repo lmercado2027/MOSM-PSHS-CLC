@@ -21,22 +21,44 @@
                 </x-back>
                 <div class="container-md">
                     <h1>Create Transaction</h1>
-                    <h4>({{ $item->name }})</h4>
+                    <h4>({{ $item->brand ?? $item->name }})</h4>
                 </div>
                 <hr>
                 <form class="container-md" action="{{ route('item.transaction.store', $item->id) }}" method="post">
                     @csrf
                     <div class="d-flex justify-content-between">
                         <div class="form-group">
-                            <label for="qty">Quantity Taken:</label>
-                            <input class="form-control" type="number" min="1" step="1" id="qty" name="qty" required>
                             <label for="type">Type:</label>
-                            <select id="type" name="type" class="form-control" required>
+                            <select id="type" name="type" class="form-control" required onchange="
+                                    $('#qtyInput').hide();
+                                    $('#qty')[0].value = '';
+                                    $('#expiryInput').hide();
+                                    $('#expiry_date')[0].value = '';
+                                    if ($('#type')[0].value == 'Added') {
+                                        $('#expiryInput').show();
+                                        $('label[for=\'qty\']')[0].innerText = 'Quantity Added:';
+                                    } else {
+                                        $('label[for=\'qty\']')[0].innerText = 'Quantity Taken:';
+                                    }
+                                    if ($('#type')[0].value != 'Expired') {
+                                        $('#qtyInput').show();
+                                    }
+                                ">
                                 <option value="">Select...</option>
+                                <option value="Added">Added</option>
                                 <option value="Consumed">Consumed</option>
                                 <option value="Expired">Expired</option>
                             </select>
+                            <div id="qtyInput">
+                                <label for="qty">Quantity:</label>
+                                <input class="form-control" type="number" min="1" step="1" id="qty" name="qty">
+                            </div>
+                            <div id="expiryInput">
+                                <label for="expiry_date">Expiration Date:</label>
+                                <input class="form-control" type="date" id="expiry_date" name="expiry_date">
+                            </div>
                             <br>
+                            <input class="form-control" type="text" id="nurse" name="nurse" value="{{ Auth::user()->name . ' (' . Auth::user()->email . ')' }}" hidden>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -66,5 +88,9 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#qtyInput').hide()
+        $('#expiryInput').hide()
+    </script>
 </body>
 </html>

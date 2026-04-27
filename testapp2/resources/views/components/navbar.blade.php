@@ -6,11 +6,6 @@
                     <a class="nav-link btn nav-btn" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
             @endif
-            @if (Route::has('register'))
-                <li class="nav-item">
-                    <a class="nav-link btn nav-btn" href="{{ route('register') }}">{{ __('Register') }}</a>
-                </li>
-            @endif
         </ul>
     @else
         <a id="navbarDropdown" class="nav-link d-none d-md-inline dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -18,6 +13,7 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ route('settings') }}">Settings</a>
+            <a class="dropdown-item" href="{{ route('nurses') }}">Nurse List</a>
             <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
@@ -42,7 +38,7 @@
         @endauth
     </div>
     <div class="d-md-none">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dropdown" aria-controls="dropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dropdown" aria-controls="dropdown" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 1em">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="dropdown">
@@ -51,11 +47,6 @@
                     @if (Route::has('login'))
                         <li class="dropdown-item">
                             <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                    @endif
-                    @if (Route::has('register'))
-                        <li class="dropdown-item">
-                            <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
                 @else
@@ -67,6 +58,9 @@
                     </li>
                     <li class="dropdown-item">
                         <a class="dropdown-item" href="{{ route('settings') }}">Settings</a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a class="dropdown-item" href="{{ route('nurses') }}">Nurse List</a>
                     </li>
                     <li class="dropdown-item">
                         <a class="dropdown-item" href="{{ route('logout') }}"

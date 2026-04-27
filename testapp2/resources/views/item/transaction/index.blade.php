@@ -23,7 +23,7 @@
                     <div>
                         <h1 style="display:inline;">Transactions</h1>
                         <h4 style="display:inline;">({{ $transactions->count() }})</h4>
-                        <h4>({{ $item->name }})</h4>
+                        <h4>({{ $item->brand ?? $item->name }})</h4>
                     </div>
                     <a class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.transaction.create', $item->id) }}">
                         <i class="bi-plus-lg" style="font-size:3em;line-height:1em"></i>
@@ -40,14 +40,26 @@
                     <br>
                     <table class="table">
                         <thead>
-                            <th scope="col" style='padding:1.125rem 1.5rem'>Quantity Taken</th>
+                            <th scope="col">Quantity Added/Removed</th>
+                            <th scope="col">Transaction Type</th>
+                            <th scope="col">Added Expiry Date</th>
+                            <th scope="col">Nurse</th>
                         </thead>
                         <tbody>
                             @foreach ($transactions as $transaction)
                                 <tr>
                                     <th scope="row">
-                                        <a href="{{ route('item.transaction.show', [$item->id, $transaction->id]) }}" class="btn item-btn" role="button">{{ $transaction->qty }}</a>
+                                        {{ $transaction->qty }}
                                     </th>
+                                    <td scope="row">
+                                        {{ $transaction->type }}
+                                    </td>
+                                    <td scope="row">
+                                        {{ $transaction->expiry_date }}
+                                    </td>
+                                    <td scope="row">
+                                        {{ $transaction->nurse }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

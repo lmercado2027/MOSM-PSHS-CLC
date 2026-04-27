@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('category');
+            $table->string('name');
+            $table->string('brand')->nullable();
             $table->string('dose')->nullable();
             $table->string('unit')->nullable();
             $table->string('size')->nullable();
