@@ -35,7 +35,7 @@ class TransactionController extends Controller
     {
         $request->validate([
             'type' => 'required|string',
-            'expiry_date' => 'nullable|date'
+            'expiry_date' => 'nullable|date',
         ]);
 
         if ($request->type == 'Added') {
@@ -95,7 +95,8 @@ class TransactionController extends Controller
         $newTransaction->expiry_date = $request->expiry_date;
         $newTransaction->nurse = $request->nurse;
         $newTransaction->save();
-        return redirect()->route('item.transaction.index', $item->id)->with('success', 'Transaction created successfully.');
+        
+        return redirect()->route('item.show', $item->id)->with('success', 'Transaction created successfully.');
     }
 
     /**

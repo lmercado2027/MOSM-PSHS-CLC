@@ -39,6 +39,7 @@ class BatchController extends Controller
         $newBatch->curr_qty = $request->curr_qty;
         $newBatch->expiry_date = $request->expiry_date;
         $newBatch->save();
+        
         return redirect()->route('item.batch.index', $item->id)->with('success', 'Batch created successfully.');
     }
 

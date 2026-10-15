@@ -2,73 +2,107 @@
 <html lang="en">
 <x-head>
     <x-slot:title>
-        Clinic: Show Item
+        Clinic: {{ $item->name }}
     </x-slot>
 </x-head>
 <body>
-    <style>
-        .action_btn {
-            width: 9em;
-        }
-    </style>
     <x-navbar/>
 
     <div class="container-fluid" style="padding-top: 15px;">
-        <div class="row">
-            <div class="col-md-12 rounded-background">
-                <x-back/>
-                <div class="container-md">
-                    <h1>{{ $item->full_name }}</h1>
-                </div>
-                <hr>
-                <div class="container-md d-flex justify-content-between">
-                    <div>
-                        <h4>Quantity: {{ $item->qty }}</h4>
-                        <h4>Earliest Expiration Date: {{ $item->expiry_date }}</h4>
-                        <br>
-                        <a type="button" class="btn item-btn d-flex justify-content-between align-items-center" href="{{ route('item.batch.index', $item->id) }}" style="width: 10em">
-                            <h4 style="margin:0">View<br>Batches</h4>
-                            <i class="bi-arrow-bar-right" style="font-size:3em;line-height:1em"></i>
-                        </a>
-                        <br>
-                        <a type="button" class="btn item-btn d-flex justify-content-between align-items-center" href="{{ route('item.transaction.index', $item->id) }}" style="width: 13em">
-                            <h4 style="margin:0">View<br>Transactions</h4>
-                            <i class="bi-arrow-bar-right" style="font-size:3em;line-height:1em"></i>
-                        </a>
-                        <br>
-                    </div>
-                    
-                    <div class="d-none d-md-flex flex-column align-items-end">
-                        <a type="button" class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.edit', $item->id) }}">
-                            <i class="bi-pencil-square" style="font-size:3em;line-height:1em"></i>
-                            <h4 style="margin:0">EDIT<br>ITEM</h4>
-                        </a>
-                        <br>
-                        <form action="{{ route('item.destroy', $item->id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn item-btn action-btn delete-btn d-flex justify-content-between align-items-center">
-                                <i class="bi-trash3" style="font-size:3em;line-height:1em"></i>
-                                <h4 style="margin:0">DELETE<br>ITEM</h4>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="container-md d-flex justify-content-between d-md-none">
-                    <a type="button" class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.edit', $item->id) }}">
-                        <i class="bi-pencil-square" style="font-size:3em;line-height:1em"></i>
-                        <h4 style="margin:0">EDIT<br>ITEM</h4>
+        <div class="">
+            <x-back/>
+            <div class="container-md rounded-5 p-5">
+                <h1><b>{{ $item->category == "drug" ? '💊 ' : ($item->category == 'topical_oral' ? '🧴 ' : '📦 ') }}{{ $item->full_name }}</b></h1>
+                <div class="d-flex justify-content-start">
+                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.edit', $item->id) }}">
+                        <i class="bi-pencil-square"></i>
+                        <p style="margin:0">Edit Item</p>
                     </a>
-                    <br>
+                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 11em;" href="{{ route('item.transaction.create', $item->id) }}">
+                        <i class="bi-plus-lg"></i>
+                        <p style="margin:0">Make Transaction</p>
+                    </a>
                     <form action="{{ route('item.destroy', $item->id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn item-btn action-btn delete-btn d-flex justify-content-between align-items-center">
-                            <i class="bi-trash3" style="font-size:3em;line-height:1em"></i>
-                            <h4 style="margin:0">DELETE<br>ITEM</h4>
+                        <button class="btn item-btn delete-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('item.index', ['sort'=>'qty']) }}">
+                            <i class="bi-trash3"></i>
+                            <p style="margin:0">Delete Item</p>
                         </button>
                     </form>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <div style="text-align: center">
+                        @if ($item->batches->isEmpty())
+                            <br>
+                            <br>
+                            <h3><b>No Batches Found<b></h3>
+                        @endif
+                        @if ($item->batches->isNotEmpty())
+                            <br>
+                            <h4><b>Batch List</b></h4>
+                            <div style="border: 0.25em solid; border-radius: 0.25em;">
+                                <table class="table m-0">
+                                    <thead>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Expiration Date</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($item->batches->sortBy('expiry_date') as $batch)
+                                            <tr>
+                                                <th scope="row">
+                                                    {{ $batch->curr_qty }}
+                                                </th>
+                                                <td>
+                                                    {{ $batch->expiry_date ?? "N/A" }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
+                    <div style="text-align: center">
+                        @if ($item->transactions->isEmpty())
+                            <br>
+                            <br>
+                            <h3><b>No Transactions Found<b></h3>
+                        @endif
+                        @if ($item->transactions->isNotEmpty())
+                            <br>
+                            <h4><b>Transaction List</b></h4>
+                            <div style="border: 0.25em solid; border-radius: 0.25em;">
+                                <table class="table m-0">
+                                    <thead>
+                                        <th scope="col">Quantity Added/Removed</th>
+                                        <th scope="col">Transaction Type</th>
+                                        <th scope="col">Added Expiry Date</th>
+                                        <th scope="col">Nurse</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($item->transactions as $transaction)
+                                            <tr>
+                                                <th scope="row">
+                                                    {{ $transaction->qty }}
+                                                </th>
+                                                <td scope="row">
+                                                    {{ $transaction->type }}
+                                                </td>
+                                                <td scope="row">
+                                                    {{ $transaction->expiry_date }}
+                                                </td>
+                                                <td scope="row">
+                                                    {{ $transaction->nurse }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

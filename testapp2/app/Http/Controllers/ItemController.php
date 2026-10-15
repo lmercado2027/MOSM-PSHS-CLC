@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Batch;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 use App\Exports\InventoryExport;
@@ -82,6 +83,8 @@ class ItemController extends Controller
         $items = $items->sortBy('name');
         if (in_array($request->sort, ['qty', 'status', 'expiry_date'])) {
             $items = $items->sortBy($request->sort);
+        } if ($request->order == "desc") {
+            $items->reverse();
         }
         return view('item.index', compact('items', 'request'));
     }
@@ -107,9 +110,11 @@ class ItemController extends Controller
             'unit' => 'nullable|string|max:255',
             'size' => 'nullable|string|max:255',
             'grouping'  => 'nullable|string|max:255',
-            'high_warning_threshold' => 'nullable|int|gt:0',
-            'mid_warning_threshold' => 'nullable|int|gt:' . ($request->high_warning_threshold ?? 0),
-            'low_warning_threshold' => 'nullable|int|gt:' . ($request->mid_warning_threshold ?? $request->high_warning_threshold ?? 0),
+            // 'high_warning_threshold' => 'nullable|int|gt:0',
+            // 'mid_warning_threshold' => 'nullable|int|gt:' . ($request->high_warning_threshold ?? 0),
+            // 'low_warning_threshold' => 'nullable|int|gt:' . ($request->mid_warning_threshold ?? $request->high_warning_threshold ?? 0),
+            'expiry_date' => 'nullable|date',
+            'qty' => 'required|int|gt:0',
         ]);
 
         $newItem = new Item();
@@ -120,10 +125,23 @@ class ItemController extends Controller
         $newItem->unit = $request->unit;
         $newItem->size = $request->size;
         $newItem->grouping = $request->grouping;
-        $newItem->high_warning_threshold = $request->high_warning_threshold;
-        $newItem->mid_warning_threshold = $request->mid_warning_threshold;
-        $newItem->low_warning_threshold = $request->low_warning_threshold;
+        // $newItem->high_warning_threshold = $request->high_warning_threshold;
+        // $newItem->mid_warning_threshold = $request->mid_warning_threshold;
+        // $newItem->low_warning_threshold = $request->low_warning_threshold;
         $newItem->save();
+        $newBatch = new Batch();
+        $newBatch->item_id = $newItem->id;
+        $newBatch->curr_qty = $request->qty;
+        $newBatch->expiry_date = $request->expiry_date;
+        $newBatch->save();
+        $newTransaction = new Transaction();
+        $newTransaction->item_id = $newItem->id;
+        $newTransaction->qty = $request->qty;
+        $newTransaction->type = 'Added';
+        $newTransaction->expiry_date = $request->expiry_date;
+        $newTransaction->nurse = $request->nurse;
+        $newTransaction->save();
+
         return redirect()->route('item.index')->with('success', 'Item created successfully.');
     }
 

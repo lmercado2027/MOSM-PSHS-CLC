@@ -5,63 +5,98 @@
     <x-navbar/>
 
     <div class="container-fluid" style="padding-top: 15px;">
-        <div class="row">
-            <div class="col-md-12 rounded-background">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h1 style="display:inline;">Inventory</h1>
-                        <h4 style="display:inline;">({{ $items->count() }})</h4>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <a class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.create') }}">
-                            <i class="bi-plus-lg" style="font-size:3em;line-height:1em"></i>
-                            <h4 style="margin:0">CREATE<br>ITEM</h4>
-                        </a>
-                        <a type="button" class="btn item-btn action-btn d-none d-md-flex justify-content-between align-items-center" href="{{ route('export') }}">
-                            <h2 style="margin:0">Export</h4>
-                            <i class="bi-box-arrow-up-right" style="font-size:2em;line-height:1em"></i>
-                        </a>
-                    </div>
+        <div class="container-md rounded-5 p-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 style="display:inline;"><b>🏥 HSU Inventory</b></h1>
+                {{-- <a type="button" class="btn item-btn d-none d-md-flex justify-content-between align-items-center border-black" style="width: 9em;" href="{{ route('export') }}">
+                    <p style="margin:0">📄 Transactions</p>
+                </a> --}}
+            </div>
+            <br>
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                    {{-- <h4 style="display:inline; white-space: nowrap;"><b>📅 Month:</b></h4>
+                    <input class="form-control" type="date" id="selected_month" name="selected_month"> --}}
                 </div>
-                @if ($items->isEmpty())
-                    <hr>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-start">
+                    <h4><b>📁 Sort by:</b></h4>
+                    @if ($request->sort == "name" && $request->order == "desc")
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 6em;" href="{{ route('item.index', ['sort'=>'name', 'order'=>'asc']) }}">
+                            <i class="bi-caret-down-fill"></i>
+                            <p style="margin:0">Name</p>
+                        </a>
+                    @else
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 6em;" href="{{ route('item.index', ['sort'=>'name', 'order'=>'desc']) }}">
+                            <i class="bi-caret-up-fill"></i>
+                            <p style="margin:0">Name</p>
+                        </a>
+                    @endif
+                    @if ($request->sort == "qty" && $request->order == "desc")
+                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.index', ['sort'=>'qty', 'order'=>'asc']) }}">
+                        <i class="bi-caret-down-fill"></i>
+                        <p style="margin:0">Quantity</p>
+                    </a>
+                    @else
+                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.index', ['sort'=>'qty', 'order'=>'desc']) }}">
+                        <i class="bi-caret-up-fill"></i>
+                        <p style="margin:0">Quantity</p>
+                    </a>
+                    @endif
+                    @if ($request->sort == "expiry_date" && $request->order == "desc")
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('item.index', ['sort'=>'expiry_date', 'order'=>'asc']) }}">
+                            <i class="bi-caret-down-fill"></i>
+                            <p style="margin:0">Expiry Date</p>
+                        </a>
+                    @else
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('item.index', ['sort'=>'expiry_date', 'order'=>'desc']) }}">
+                            <i class="bi-caret-up-fill"></i>
+                            <p style="margin:0">Expiry Date</p>
+                        </a>
+                    @endif
+                </div>
+                <div class="d-flex justify-content-start">
+                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7.5em;" href="{{ route('item.create') }}">
+                        <i class="bi-plus-circle"></i>
+                        <p style="margin:0">Add Item</p>
+                    </a>
+                    <a type="button" class="btn item-btn mx-2 d-none d-md-flex justify-content-between align-items-center border-black" style="width: 6.5em;" href="{{ route('export') }}">
+                        <p style="margin:0">💾 Export</p>
+                    </a>
+                </div>
+            </div>
+            @if ($items->isEmpty())
+                <br>
+                <h4><b>No Items Found</b></h4>
+            @endif
+            @foreach (['drug', 'topical_oral', 'supplies'] as $category)
+                @if ($items->where('category', $category)->isNotEmpty())
                     <br>
-                    <h4>No Items Found</h4>
-                @endif
-                @foreach (['drug', 'topical_oral', 'supplies'] as $category)
-                    @if ($items->where('category', $category)->isNotEmpty())
-                        <hr>
-                        <br>
-                        <h4>
-                            @if ($category == "drug")
-                                Drugs
-                            @elseif ($category == "topical_oral")
-                                Topical/Oral
-                            @else
-                                Supplies
-                            @endif
-                        </h4>
-                        <table class="table">
+                    <div style="text-align: center"><h4><b>
+                        @if ($category == "drug")
+                            Drugs
+                        @elseif ($category == "topical_oral")
+                            Topical/Oral
+                        @else
+                            Supplies
+                        @endif
+                    </b></h4></div>
+                    <div style="border: 0.25em solid; border-radius: 0.25em;">
+                        <table class="table m-0">
                             <thead>
                                 <th scope="col">
-                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'name']) }}">
-                                        <b>Name</b>
-                                    </a>
+                                    <b>Name</b>
                                 </th>
                                 <th scope="col">
-                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'qty']) }}">
-                                        <b>Quantity</b>
-                                    </a>
+                                    <b>Current Inventory</b>
                                 </th>
                                 <th scope="col">
-                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'status']) }}">
-                                        <b>Status</b>
-                                    </a>
+                                    <b>Status</b>
                                 </th>
                                 <th scope="col">
-                                    <a class="btn item-btn" href="{{ route('item.index', ['sort'=>'expiry_date']) }}">
-                                        <b>Earliest Expiration Date</b>
-                                    </a>
+                                    <b>Expiration Date</b>
                                 </th>
                             </thead>
                             <tbody id="databaseTable">
@@ -95,9 +130,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    @endif
-                @endforeach
-            </div>
+                    </div>
+                @endif
+            @endforeach
         </div>
     </div>
 </body>

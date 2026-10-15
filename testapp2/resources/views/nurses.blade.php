@@ -9,25 +9,26 @@
     <x-navbar/>
 
     <div class="container-fluid" style="padding-top: 15px;">
-        <div class="row">
-            <div class="col-md-12 rounded-background">
-                <x-back/>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h1 style="display:inline;">Nurses</h1>
-                        <h4 style="display:inline;">({{ $users->count() }})</h4>
-                    </div>
-                    @if (Auth::user()->admin)
-                        <div class="d-flex justify-content-start">
-                            <a class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('register') }}">
-                                <i class="bi-person-plus-fill" style="font-size:3em;line-height:1em"></i>
-                                <h4 style="margin:0">ADD<br>NURSE</h4>
-                            </a>
-                        </div>
-                    @endif
+        <x-back/>
+        <div class="container-md rounded-5 p-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 style="display:inline;"><b>🏥 HSU Inventory</b></h1>
+            </div>
+            <br>
+            <div class="d-flex justify-content-between">
+                <h4 style="display:inline; margin: 0;"><b>👨🏻‍⚕️👩🏻‍⚕️ Nurse List</b></h4>
+                @if (Auth::user()->admin)
+                <div class="d-flex justify-content-start">
+                    <a class="btn item-btn d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('register') }}">
+                        <i class="bi-person-plus-fill"></i>
+                        <p style="margin:0">Add Nurse</p>
+                    </a>
                 </div>
-                <br>
-                <table class="table">
+                @endif
+            </div>
+            <br>
+            <div style="border: 0.25em solid; border-radius: 0.25em;">
+                <table class="table m-0">
                     <thead>
                         <th scope="col" style="padding: .75em 1.5em;">Name</th>
                         <th scope="col">Email</th>

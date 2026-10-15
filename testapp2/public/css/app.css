@@ -1,5 +1,14 @@
-h1, h2, h4, a, th, td {
+body {
+    background-color: #ebf1f6;
+}
+
+.container-md {
+    background-color: #f8f8f8;
+}
+
+h1, h2, h4, a, th, td, b {
     font-family: "Lato", sans-serif;
+    color: #494949;
 }
 
 .nav-btn {
@@ -19,7 +28,7 @@ h1, h2, h4, a, th, td {
 }
 
 .action-btn {
-    width: 11em;
+    width: 9em;
 }
 
 .delete-btn {

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\BatchController;
@@ -8,9 +10,9 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Models\User;
 
-Route::resource('item', ItemController::class);
-Route::resource('item.batch', BatchController::class);
-Route::resource('item.transaction', TransactionController::class);
+Route::resource('item', ItemController::class) -> middleware('auth');
+Route::resource('item.batch', BatchController::class) -> middleware('auth');
+Route::resource('item.transaction', TransactionController::class) -> middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {

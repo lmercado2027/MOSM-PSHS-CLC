@@ -38,8 +38,8 @@ return new class extends Migration
         });
 
         DB::table('users')->insert([ # replace with the real head nurse
-            'name' => 'Sum Wan',
-            'email' => 'sum1datayustuno@gmail.com',
+            'name' => 'Joy del Rosario',
+            'email' => 'jdrosario@pcenter.ph',
             'password' => Hash::make('nakakapagpabagabag'),
             'admin' => true,
         ]);
