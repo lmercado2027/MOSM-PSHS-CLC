@@ -7,7 +7,7 @@
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="container-md rounded-5 p-5">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 style="display:inline;"><b>🏥 HSU Inventory</b></h1>
+                <h1 style="display:inline;"><b>🏥 Heath Services Unit - Inventory</b></h1>
                 {{-- <a type="button" class="btn item-btn d-none d-md-flex justify-content-between align-items-center border-black" style="width: 9em;" href="{{ route('export') }}">
                     <p style="margin:0">📄 Transactions</p>
                 </a> --}}
@@ -23,36 +23,51 @@
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-start">
                     <h4><b>📁 Sort by:</b></h4>
-                    @if ($request->sort == "name" && $request->order == "desc")
+                    @if ($request->sort == "name" && $request->order == "asc")
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 6em;" href="{{ route('item.index', ['sort'=>'name', 'order'=>'desc']) }}">
+                            <i class="bi-caret-up-fill"></i>
+                            <p style="margin:0">Name</p>
+                        </a>
+                    @elseif ($request->sort == "name" && $request->order == "desc")
                         <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 6em;" href="{{ route('item.index', ['sort'=>'name', 'order'=>'asc']) }}">
                             <i class="bi-caret-down-fill"></i>
                             <p style="margin:0">Name</p>
                         </a>
                     @else
-                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 6em;" href="{{ route('item.index', ['sort'=>'name', 'order'=>'desc']) }}">
-                            <i class="bi-caret-up-fill"></i>
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 6em;" href="{{ route('item.index', ['sort'=>'name', 'order'=>'asc']) }}">
+                            <i class="bi-dash"></i>
                             <p style="margin:0">Name</p>
                         </a>
                     @endif
-                    @if ($request->sort == "qty" && $request->order == "desc")
-                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.index', ['sort'=>'qty', 'order'=>'asc']) }}">
-                        <i class="bi-caret-down-fill"></i>
-                        <p style="margin:0">Quantity</p>
-                    </a>
+                    @if ($request->sort == "qty" && $request->order == "asc")
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.index', ['sort'=>'qty', 'order'=>'desc']) }}">
+                            <i class="bi-caret-up-fill"></i>
+                            <p style="margin:0">Quantity</p>
+                        </a>
+                    @elseif ($request->sort == "qty" && $request->order == "desc")
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.index', ['sort'=>'qty', 'order'=>'asc']) }}">
+                            <i class="bi-caret-down-fill"></i>
+                            <p style="margin:0">Quantity</p>
+                        </a>
                     @else
-                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.index', ['sort'=>'qty', 'order'=>'desc']) }}">
-                        <i class="bi-caret-up-fill"></i>
-                        <p style="margin:0">Quantity</p>
-                    </a>
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.index', ['sort'=>'qty', 'order'=>'asc']) }}">
+                            <i class="bi-dash"></i>
+                            <p style="margin:0">Quantity</p>
+                        </a>
                     @endif
-                    @if ($request->sort == "expiry_date" && $request->order == "desc")
+                    @if ($request->sort == "expiry_date" && $request->order == "asc")
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('item.index', ['sort'=>'expiry_date', 'order'=>'desc']) }}">
+                            <i class="bi-caret-up-fill"></i>
+                            <p style="margin:0">Expiry Date</p>
+                        </a>
+                    @elseif ($request->sort == "expiry_date" && $request->order == "desc")
                         <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('item.index', ['sort'=>'expiry_date', 'order'=>'asc']) }}">
                             <i class="bi-caret-down-fill"></i>
                             <p style="margin:0">Expiry Date</p>
                         </a>
                     @else
-                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('item.index', ['sort'=>'expiry_date', 'order'=>'desc']) }}">
-                            <i class="bi-caret-up-fill"></i>
+                        <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 8em;" href="{{ route('item.index', ['sort'=>'expiry_date', 'order'=>'asc']) }}">
+                            <i class="bi-dash"></i>
                             <p style="margin:0">Expiry Date</p>
                         </a>
                     @endif

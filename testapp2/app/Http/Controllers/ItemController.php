@@ -80,11 +80,10 @@ class ItemController extends Controller
             $item = ItemController::expand_name($item);
         }
 
-        $items = $items->sortBy('name');
-        if (in_array($request->sort, ['qty', 'status', 'expiry_date'])) {
+        if (in_array($request->sort, ['name', 'qty', 'status', 'expiry_date'])) {
             $items = $items->sortBy($request->sort);
         } if ($request->order == "desc") {
-            $items->reverse();
+            $items = $items->reverse();
         }
         return view('item.index', compact('items', 'request'));
     }

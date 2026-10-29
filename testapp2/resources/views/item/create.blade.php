@@ -13,7 +13,7 @@
             <x-back/>
             <div class="container-md rounded-5 p-5">
                 <div>
-                    <h1 style="display:inline;"><b>🏥 HSU Inventory</b></h1>
+                    <h1 style="display:inline;"><b>🏥 Heath Services Unit - Inventory</b></h1>
                 </div>
                 <br>
                 <div class="d-flex align-items-center">

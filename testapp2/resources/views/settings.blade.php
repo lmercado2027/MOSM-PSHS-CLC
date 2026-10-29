@@ -14,20 +14,25 @@
     <x-navbar/>
 
     <div class="container-fluid" style="padding-top: 15px;">
-        <div class="row">
-            <div class="col-md-12 rounded-background">
-                <x-back/>
-                <div class="container-md">
-                    <h1>Settings</h1>
+        <x-back/>
+            <div class="container-md rounded-5 p-5">
+                <div>
+                    <h1 style="display:inline;"><b>🏥 Heath Services Unit - Inventory</b></h1>
+                </div>
+                <br>
+                <div class="d-flex align-items-center">
+                    <i class="bi-gear-fill"></i>
+                    <span>&nbsp;</span>
+                    <h4 style="display:inline; margin: 0;"><b>Settings</b></h4>
                 </div>
                 <hr>
-                <div class="container-md">
+                <div>
                     <h2>Account</h2>
-                    <a type="button" class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('password.request') }}">
-                        <i class="bi-unlock2-fill" style="font-size:3em;line-height:1em"></i>
-                        <h4 style="margin:0">CHANGE<br>PASSWORD</h4>
+                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 11em;" href="{{ route('password.request') }}">
+                        <i class="bi-unlock2-fill"></i>
+                        <p style="margin:0">Change Password</p>
                     </a>
-                    <br>
+                    {{-- <br>
                     <h2>Expiry Warnings</h2>
                     <br>
                     <div class="d-flex flex-wrap justify-content-between">
@@ -51,7 +56,7 @@
                     <a type="button" class="btn item-btn action-btn d-flex justify-content-between align-items-center" href="{{ route('item.index') }}">
                         <i class="bi-check2-circle" style="font-size:3em;line-height:1em"></i>
                         <h4 style="margin:0">CONFIRM<br>SETTINGS</h4>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>

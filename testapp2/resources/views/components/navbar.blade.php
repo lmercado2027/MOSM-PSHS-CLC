@@ -1,4 +1,4 @@
-<nav class="p-4 navbar navbar-expand-md navbar-light d-flex justify-content-end justify-content-md-between flex-row-reverse" style="background-color:#f3f7fa">
+<nav class="p-3 navbar navbar-expand-md navbar-light d-flex justify-content-end justify-content-md-between flex-row-reverse" style="background-color:#f3f7fa">
     @guest
         <ul class="d-none d-md-flex navbar-nav">
             @if (Route::has('login'))

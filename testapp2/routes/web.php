@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
             $curr_head->save();
             $new_head->save();
         }
-        return redirect('/item');
+        return redirect('/nurses');
     }) -> name('promote');
 
     Route::get('/unregister/{id}', function(int $id) {
@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
             $user = User::findOrFail($id);
             $user->delete();
         }
-        return redirect('/item');
+        return redirect('/nurses');
     }) -> name('unregister');
 });
 

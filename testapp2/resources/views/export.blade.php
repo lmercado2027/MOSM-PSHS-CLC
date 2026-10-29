@@ -12,7 +12,7 @@
         <x-back/>
         <div class="container-md rounded-5 p-5">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 style="display:inline;"><b>🏥 HSU Inventory</b></h1>
+                <h1 style="display:inline;"><b>🏥 Heath Services Unit - Inventory</b></h1>
             </div>
             <br>
             <h4 style="display:inline; margin: 0;"><b>💾 Export Items</b></h4>
