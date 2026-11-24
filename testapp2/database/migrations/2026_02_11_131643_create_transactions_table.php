@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('type');
             $table->integer('qty');
             $table->date('expiry_date')->nullable();
-            $table->string('nurse');
+            // $table->string('nurse');
+            $table->timestamp('time_created');
             $table->timestamps();
         });
     }

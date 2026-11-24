@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="form-group col">
                             <div class="row">
-                                <div class="col"><label for="category"><b>Category:</b></label></div>
+                                <div class="col"><label for="category"><b><span style="color: red">*</span>Category:</b></label></div>
                                 <div class="col"><select id="category" name="category" class="form-control" required onchange="
                                     $('#brandInput').hide();
                                     $('#brand')[0].value = '';
@@ -35,9 +35,9 @@
                                     $('#dose')[0].value = '';
                                     if ($('#category')[0].value == 'drug') {
                                         $('#brandInput').show();
-                                        $('label[for=\'name\']')[0].innerHTML = '<b>Generic Name:</b>';
+                                        $('label[for=\'name\']')[0].innerHTML = '<b><span style=\'color: red\'>*</span>Generic Name:</b>';
                                     } else {
-                                        $('label[for=\'name\']')[0].innerHTML = '<b>Name:</b>';
+                                        $('label[for=\'name\']')[0].innerHTML = '<b><span style=\'color: red\'>*</span>Name:</b>';
                                     }
                                     if ($('#category')[0].value != 'supplies') {
                                         $('#doseInput').show();
@@ -50,7 +50,7 @@
                                 </select></div>
                             </div>
                             <div class="row">
-                                <div class="col"><label for="name"><b>Name:</b></label></div>
+                                <div class="col"><label for="name"><b><span style="color: red">*</span>Name:</b></label></div>
                                 <div class="col"><input class="form-control" type="text" id="name" name="name" required></div>
                             </div>
                             <div class="row" id="brandInput">
@@ -61,33 +61,38 @@
                                 <div class="col"><label for="dose"><b>Dose (ex. "10mcg"):</b></label></div>
                                 <div class="col"><input class="form-control" type="text" id="dose" name="dose"></div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col"><label for="unit"><b>Unit:</b></label></div>
                                 <div class="col"><select id="unit" name="unit" class="form-control">
                                     <option value="">Select...</option>
                                     <option value="cap">Capsule</option>
+                                    <option value="nebule">Nebule</option>
                                     <option value="pack">Pack</option>
                                     <option value="sachet">Sachet</option>
                                     <option value="syrup">Syrup</option>
                                     <option value="tab">Tablet</option>
                                 </select></div>
+                            </div> --}}
+                            <div class="row">
+                                <div class="col"><label for="unit"><b>Unit:</b></label></div>
+                                <div class="col"><input class="form-control" type="text" id="unit" name="unit"></div>
                             </div>
                             <div class="row">
                                 <div class="col"><label for="size"><b>Size (ex. "10pcs", "10cmx10cm"):</b></label></div>
                                 <div class="col"><input class="form-control" type="text" id="size" name="size"></div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col"><label for="grouping"><b>Grouping (ex. "Pack of 10s"):</b></label></div>
                                 <div class="col"><input class="form-control" type="text" id="grouping" name="grouping"></div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="form-group col">
                             <div class="row">
-                                <div class="col"><label for="qty"><b>Beginning Inventory:</b></label></div>
+                                <div class="col"><label for="qty"><b><span style="color: red">*</span>Beginning Inventory:</b></label></div>
                                 <div class="col"><input class="form-control" type="number" min="1" step="1" id="qty" name="qty"></div>
                             </div>
                             <div class="row">
-                                <div class="col"><label for="expiry_date"><b>Expiry Date:</b></label></div>
+                                <div class="col"><label for="expiry_date"><b><span style="color: red">*</span>Expiry Date:</b></label></div>
                                 <div class="col"><input class="form-control" type="date" id="expiry_date" name="expiry_date"></div>
                             </div>
                         </div>

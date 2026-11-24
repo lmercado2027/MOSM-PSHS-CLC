@@ -26,12 +26,12 @@ class ItemController extends Controller
             } else {
                 $item->full_name .= " " . $item->unit;
             }
-        } if (in_array($item->unit, ['pack', 'sachet', 'syrup'])) {
+        } if (!in_array($item->unit, ['cap', 'tab'])) {
             $item->full_name .= " " . $item->unit;
         } if ($item->size) {
             $item->full_name .= " " . $item->size;
-        } if ($item->grouping) {
-            $item->full_name .= " " . $item->grouping;
+        // } if ($item->grouping) {
+        //     $item->full_name .= " " . $item->grouping;
         }
 
         return $item;
@@ -123,7 +123,7 @@ class ItemController extends Controller
         $newItem->dose = $request->dose;
         $newItem->unit = $request->unit;
         $newItem->size = $request->size;
-        $newItem->grouping = $request->grouping;
+        // $newItem->grouping = $request->grouping;
         // $newItem->high_warning_threshold = $request->high_warning_threshold;
         // $newItem->mid_warning_threshold = $request->mid_warning_threshold;
         // $newItem->low_warning_threshold = $request->low_warning_threshold;
@@ -138,7 +138,8 @@ class ItemController extends Controller
         $newTransaction->qty = $request->qty;
         $newTransaction->type = 'Added';
         $newTransaction->expiry_date = $request->expiry_date;
-        $newTransaction->nurse = $request->nurse;
+        // $newTransaction->nurse = $request->nurse;
+        $newTransaction->time_created = time();
         $newTransaction->save();
 
         return redirect()->route('item.index')->with('success', 'Item created successfully.');
@@ -154,6 +155,7 @@ class ItemController extends Controller
             return $value->curr_qty > 0  && $value->expiry_date;
         })->sortBy('expiry_date')->first()->expiry_date ?? "N/A";
         $item = ItemController::expand_name($item);
+        date_default_timezone_set("Asia/Manila");
         return view('item.show', compact('item'));
     }
 

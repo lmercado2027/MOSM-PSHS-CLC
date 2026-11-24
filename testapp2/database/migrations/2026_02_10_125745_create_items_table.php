@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('dose')->nullable();
             $table->string('unit')->nullable();
             $table->string('size')->nullable();
-            $table->string('grouping')->nullable();
+            // $table->string('grouping')->nullable();
             $table->integer('high_warning_threshold')->nullable();
             $table->integer('mid_warning_threshold')->nullable();
             $table->integer('low_warning_threshold')->nullable();

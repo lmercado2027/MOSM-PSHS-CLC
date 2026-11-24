@@ -14,10 +14,10 @@
             <div class="container-md rounded-5 p-5">
                 <h1><b>{{ $item->category == "drug" ? '💊 ' : ($item->category == 'topical_oral' ? '🧴 ' : '📦 ') }}{{ $item->full_name }}</b></h1>
                 <div class="d-flex justify-content-start">
-                    <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.edit', $item->id) }}">
+                    {{-- <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 7em;" href="{{ route('item.edit', $item->id) }}">
                         <i class="bi-pencil-square"></i>
                         <p style="margin:0">Edit Item</p>
-                    </a>
+                    </a> --}}
                     <a class="btn item-btn mx-2 d-flex justify-content-between align-items-center border-black" style="width: 11em;" href="{{ route('item.transaction.create', $item->id) }}">
                         <i class="bi-plus-lg"></i>
                         <p style="margin:0">Make Transaction</p>
@@ -79,7 +79,7 @@
                                         <th scope="col">Quantity Added/Removed</th>
                                         <th scope="col">Transaction Type</th>
                                         <th scope="col">Added Expiry Date</th>
-                                        <th scope="col">Nurse</th>
+                                        <th scope="col">Time of Transaction</th>
                                     </thead>
                                     <tbody>
                                         @foreach ($item->transactions as $transaction)
@@ -94,7 +94,7 @@
                                                     {{ $transaction->expiry_date }}
                                                 </td>
                                                 <td scope="row">
-                                                    {{ $transaction->nurse }}
+                                                    {{ date('Y-m-d H:i:s', $transaction->time_created) }}
                                                 </td>
                                             </tr>
                                         @endforeach

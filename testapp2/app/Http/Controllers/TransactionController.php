@@ -93,7 +93,8 @@ class TransactionController extends Controller
         $newTransaction->qty = $request->qty;
         $newTransaction->type = $request->type;
         $newTransaction->expiry_date = $request->expiry_date;
-        $newTransaction->nurse = $request->nurse;
+        // $newTransaction->nurse = $request->nurse;
+        $newTransaction->time_created = time();
         $newTransaction->save();
         
         return redirect()->route('item.show', $item->id)->with('success', 'Transaction created successfully.');
